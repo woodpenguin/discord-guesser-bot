@@ -3,8 +3,9 @@ require("dotenv").config();
 const { REST, Routes } = require("discord.js");
 
 const guessCommand = require("./commands/guess");
+const dailyCommand = require("./commands/daily");
 
-const commands = [guessCommand.data.toJSON()];
+const commands = [guessCommand.data.toJSON(), dailyCommand.data.toJSON()];
 
 const rest = new REST({ version: "10" }).setToken(process.env.DISCORD_TOKEN);
 
