@@ -1,5 +1,6 @@
 require("dotenv").config();
 const pool = require("./services/db");
+const { getDailyCharacter } = require("./games/smash/smashService");
 
 const { Client, GatewayIntentBits, Collection, Events } = require("discord.js");
 
@@ -62,3 +63,15 @@ async function testDatabase() {
 }
 
 testDatabase();
+async function test() {
+  try {
+    const character = await getDailyCharacter();
+
+    console.log("Daily character:");
+    console.log(character);
+  } catch (error) {
+    console.error("Test failed:", error);
+  }
+}
+
+test();
