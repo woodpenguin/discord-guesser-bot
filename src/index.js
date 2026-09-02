@@ -1,4 +1,5 @@
 require("dotenv").config();
+const pool = require("./services/db");
 
 const { Client, GatewayIntentBits, Collection, Events } = require("discord.js");
 
@@ -48,3 +49,16 @@ client.on(Events.InteractionCreate, async (interaction) => {
 });
 
 client.login(process.env.DISCORD_TOKEN);
+
+async function testDatabase() {
+  try {
+    const [rows] = await pool.query("SELECT 1 AS test");
+
+    console.log("Database connected!");
+    console.log(rows);
+  } catch (error) {
+    console.error("Database connection failed:", error);
+  }
+}
+
+testDatabase();
