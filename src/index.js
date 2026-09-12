@@ -11,10 +11,10 @@ const client = new Client({
 client.commands = new Collection();
 
 const guessCommand = require("./commands/guess");
-//const dailyCommand = require("./commands/daily");
+const dailyCommand = require("./commands/daily");
 
 client.commands.set(guessCommand.data.name, guessCommand);
-//client.commands.set(dailyCommand.data.name, dailyCommand);
+client.commands.set(dailyCommand.data.name, dailyCommand);
 
 client.once("clientReady", () => {
   console.log(`bot is online as ${client.user.tag}`);
@@ -50,28 +50,3 @@ client.on(Events.InteractionCreate, async (interaction) => {
 });
 
 client.login(process.env.DISCORD_TOKEN);
-
-async function testDatabase() {
-  try {
-    const [rows] = await pool.query("SELECT 1 AS test");
-
-    console.log("Database connected!");
-    console.log(rows);
-  } catch (error) {
-    console.error("Database connection failed:", error);
-  }
-}
-
-testDatabase();
-async function test() {
-  try {
-    const character = await getDailyCharacter();
-
-    console.log("Daily character:");
-    console.log(character);
-  } catch (error) {
-    console.error("Test failed:", error);
-  }
-}
-
-test();
