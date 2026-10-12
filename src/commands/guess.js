@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require("discord.js");
 const { getDailyCharacter } = require("../games/smash/smashService");
+const { saveGuess } = require("../services/gameService");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -16,7 +17,17 @@ module.exports = {
     const guess = interaction.options.getString("character");
     const dailyCharacter = await getDailyCharacter();
 
-    if (guess.toLowerCase() === dailyCharacter.name.toLowerCase()) {
+    const isCorrect = guess.toLowerCase() === dailyCharacter.name.toLowerCase();
+
+    await saveGuess({
+      discordUserId: interaction.user.id,
+      discordUsername: interaction.user.username,
+      game: "smash",
+      guess,
+      isCorrect,
+    });
+
+    if (isCorrect) {
       await interaction.reply(
         `🎉 Correct! Today's character is **${dailyCharacter.name}**!`,
       );
